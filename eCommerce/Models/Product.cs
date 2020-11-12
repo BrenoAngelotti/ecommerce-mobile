@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
 namespace eCommerce.Models
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public Product()
-        {
-        }
+        public string Title { get; set; }
+
+        [JsonProperty("picture")]
+        public string PictureURL { get; set; }
+
+        [JsonProperty("unit_price")]
+        public decimal UnitPrice { get; set; }
     }
 }

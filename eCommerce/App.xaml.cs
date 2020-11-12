@@ -1,16 +1,30 @@
-﻿using System;
+﻿using eCommerce.Services;
+using eCommerce.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace eCommerce
 {
-    public partial class App : Application
+    public partial class App : Xamarin.Forms.Application
     {
         public App()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            Register();
+
+            var navigation = new Xamarin.Forms.NavigationPage(new ProductListPage());
+            navigation.On<iOS>().SetPrefersLargeTitles(true);
+            navigation.BarBackgroundColor = Color.FromHex("#f0f0f0");
+            navigation.BarTextColor = Color.Black;
+
+            MainPage = navigation;
+        }
+
+        void Register()
+        {
+            DependencyService.RegisterSingleton<IProductService>(new ProductService());
         }
 
         protected override void OnStart()

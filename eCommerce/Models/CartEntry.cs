@@ -1,10 +1,15 @@
-﻿using System;
-namespace eCommerce.Models
+﻿namespace eCommerce.Models
 {
-    public class CartEntry
+    public class CartEntry : BaseEntity
     {
-        public CartEntry()
-        {
+        public Product Product { get; set; }
+
+        public int Amount { get; set; }
+
+        public decimal Subtotal { get
+            {
+                return Product.UnitPrice * Amount;
+            }
         }
     }
 }

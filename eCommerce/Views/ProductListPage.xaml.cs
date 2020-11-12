@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using eCommerce.Services;
+using eCommerce.ViewModels;
 using Xamarin.Forms;
 
 namespace eCommerce.Views
@@ -10,6 +9,8 @@ namespace eCommerce.Views
         public ProductListPage()
         {
             InitializeComponent();
+            var productService = DependencyService.Get<IProductService>();
+            BindingContext = new ProductListViewModel(productService);
         }
     }
 }

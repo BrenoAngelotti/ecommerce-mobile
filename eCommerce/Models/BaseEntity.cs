@@ -1,10 +1,9 @@
-﻿using System;
+﻿using eCommerce.Helpers;
+
 namespace eCommerce.Models
 {
-    public class BaseEntity
+    public class BaseEntity : BindableObject
     {
-        public BaseEntity()
-        {
-        }
+        public int Id { get; set; }
     }
 }

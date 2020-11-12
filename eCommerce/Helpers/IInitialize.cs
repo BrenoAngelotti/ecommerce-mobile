@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+
 namespace eCommerce.Helpers
 {
-    public class IInitialize
+    public interface IInitialize
     {
-        public IInitialize()
-        {
-        }
+        Task InitializeAsync();
     }
 }
