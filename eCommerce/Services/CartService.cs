@@ -49,12 +49,15 @@ namespace eCommerce.Services
             //Mock
             await Task.Delay(500);
 
-            Cart.Entries.Add(new CartEntry
+            if (!Cart.Entries.Any())
             {
-                Id = 0,
-                ProductId = 1,
-                Amount = 2
-            }) ;
+                Cart.Entries.Add(new CartEntry
+                {
+                    Id = 0,
+                    ProductId = 1,
+                    Amount = 2
+                });
+            }
             //End mock
 
             return await Task.FromResult(Cart);

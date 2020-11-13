@@ -3,13 +3,35 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-    x:Class="eCommerce.Views.CartPage">
+    x:Class="eCommerce.Views.CartPage"
+    Background="#f0f0f0">
     <ContentPage.Content>
         <CollectionView
             ItemsSource="{Binding Entries}">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Vertical"
+                    ItemSpacing="16"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <StackLayout
+                    VerticalOptions="FillAndExpand">
+                    <Label
+                        Grid.Row="1"
+                        FontSize="Large"
+                        HorizontalTextAlignment="Center"
+                        VerticalOptions="CenterAndExpand"
+                        Text="{Binding EmptyMessage}"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout>
+                    <StackLayout
+                        Padding="16"
+                        Background="White">
                         <ffimageloading:CachedImage
                                 Aspect="AspectFit"
                                 WidthRequest="100"
@@ -17,7 +39,7 @@
                                 DownsampleToViewSize="true"
                                 ErrorPlaceholder="no_pic"
                                 LoadingPlaceholder="no_pic"
-                                Source="{Binding PictureURL}" />
+                                Source="{Binding Product.PictureURL}" />
 
                         <Label
                             Text="{Binding Product.Name}"/>

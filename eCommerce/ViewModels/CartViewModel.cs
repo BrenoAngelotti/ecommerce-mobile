@@ -13,18 +13,18 @@ namespace eCommerce.ViewModels
         //Observable for listing
         public ObservableCollection<CartEntry> Entries { get; set; }
 
-        private Store _store;
-        public Store Store
-        {
-            get => _store;
-            set => SetProperty(ref _store, value);
-        }
-
         private Cart _cart;
         public Cart Cart
         {
             get => _cart;
             set => SetProperty(ref _cart, value);
+        }
+
+        private string _emptyMessage;
+        public string EmptyMessage
+        {
+            get => _emptyMessage;
+            set => SetProperty(ref _emptyMessage, value);
         }
 
 
@@ -41,11 +41,6 @@ namespace eCommerce.ViewModels
             _productService = productService;
             _cartService = cartService;
             
-            Store = new Store
-            {
-                Name = "Carregando...",
-                LogoURL = ""
-            };
             Cart = new Cart();
             Entries = new ObservableCollection<CartEntry>();
         }
@@ -62,6 +57,7 @@ namespace eCommerce.ViewModels
         {
             IsBusy = true;
             await LoadCartAsync();
+            EmptyMessage = "Carrinho Vazio";
             IsBusy = false;
         }
 
@@ -76,7 +72,7 @@ namespace eCommerce.ViewModels
             //Get product data for cart entries
             Cart.Entries.ForEach(async e =>
             {
-                e.Product = await _productService.GetById(e.ProductId).ConfigureAwait(true);
+                e.Product = await _productService.GetById(e.ProductId);
                 Entries.Add(e);
             });
         }

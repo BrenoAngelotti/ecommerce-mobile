@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:eCommerce.ViewModels"
     iOS:NavigationPage.PrefersLargeTitles="False"
     iOS:Page.UseSafeArea="True"
-    BackgroundColor="#f0f0f0">
+    Background="#f0f0f0">
     <NavigationPage.TitleView>
         <StackLayout
             Orientation="Horizontal"
@@ -35,7 +35,6 @@
                 HorizontalOptions="End"
                 Command="{Binding OpenCartCommand}"
                 BackgroundColor="Transparent"
-                TextColor="White"
                 />
         </StackLayout>
     </NavigationPage.TitleView>
@@ -81,7 +80,7 @@
                                 TextColor="Black"
                                 FontAttributes="Bold"
                                 FontSize="Large"
-                                Text="{Binding Title}"/>
+                                Text="{Binding Name}"/>
 
                             <Label
                                 TextColor="Black"
