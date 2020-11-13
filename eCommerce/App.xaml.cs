@@ -19,6 +19,7 @@ namespace eCommerce
         {
             DependencyService.RegisterSingleton<IProductService>(new ProductService());
             DependencyService.RegisterSingleton<IStoreService>(new StoreService());
+            DependencyService.RegisterSingleton<ICartService>(new CartService());
         }
 
         protected override void OnStart()

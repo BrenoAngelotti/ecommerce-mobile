@@ -3,7 +3,7 @@ using eCommerce.Helpers;
 
 namespace eCommerce.Models
 {
-    public class Store : BindableObject
+    public class Store : BaseEntity
     {
         public string Name { get; set; }
 

@@ -21,7 +21,7 @@ namespace eCommerce.Services
             Store = new Store
             {
                 Name = "Amazon",
-                LogoURL = "https://www.marketplace.org/wp-content/uploads/2019/07/ama2.png?resize=740%2C204"
+                LogoURL = "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
             };
             //End mock
 

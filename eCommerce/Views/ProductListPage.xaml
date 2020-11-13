@@ -5,27 +5,40 @@
     x:Class="eCommerce.Views.ProductListPage"
     xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:vm="clr-namespace:eCommerce.ViewModels"
     iOS:NavigationPage.PrefersLargeTitles="False"
     iOS:Page.UseSafeArea="True"
     BackgroundColor="#f0f0f0">
     <NavigationPage.TitleView>
         <StackLayout
             Orientation="Horizontal"
-            VerticalOptions="CenterAndExpand">
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="FillAndExpand">
             <ffimageloading:CachedImage
                 Aspect="AspectFit"
                 HeightRequest="50"
+                WidthRequest="50"
+                Margin="8"
                 DownsampleToViewSize="true"
                 Source="{Binding Store.LogoURL}"
-                VerticalOptions="Center"/>
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
             <Label
                 Text="{Binding Store.Name}"
-                VerticalOptions="Center"/>
+                FontAttributes="Bold"
+                FontSize="Title"
+                VerticalOptions="Center"
+                HorizontalOptions="CenterAndExpand"/>
+            <Button
+                Text="{Binding Cart.Count, StringFormat='Carrinho({0})'}"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                />
         </StackLayout>
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <RefreshView
-            Command="{Binding ProductsCommand}"
+            Command="{Binding LoadProductsCommand}"
             IsRefreshing="{Binding IsBusy}">
             <CollectionView
                 ItemsSource="{Binding Products}">
@@ -37,24 +50,14 @@
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.EmptyView>
-                    <StackLayout>
-                        <Path
-                            Grid.Column="2"
-                            Margin="0,0,8,0"
-                            Aspect="Uniform"
-                            Data="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"
-                            Fill="#fbc02b"
-                            HeightRequest="24"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            WidthRequest="24" />
-
+                    <StackLayout
+                        VerticalOptions="FillAndExpand">
                         <Label
                             Grid.Row="1"
                             FontSize="Large"
                             HorizontalTextAlignment="Center"
-                            Text="{Binding EmptyMessage}"
-                            VerticalOptions="Start" />
+                            VerticalOptions="CenterAndExpand"
+                            Text="{Binding EmptyMessage}"/>
                     </StackLayout>
                 </CollectionView.EmptyView>
 
@@ -76,11 +79,17 @@
                                 Text="{Binding Title}"/>
 
                             <Label
-                                Text="{Binding UnitPrice}"/>
+                                Text="{
+                                    Binding UnitPrice,
+                                    StringFormat='R$ {0:F2}'}"/>
 
                             <Button
                                 Text="Adicionar ao Carrinho"
-                                Command="{Binding AddToCartCommand}"/>
+                                BackgroundColor="#306040"
+                                TextColor="White"
+                                HeightRequest="32"
+                                CommandParameter="{Binding Id}"
+                                Command="{Binding Path=AddToCartCommand, Source={RelativeSource AncestorType={x:Type vm:ProductListViewModel}}}"/>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

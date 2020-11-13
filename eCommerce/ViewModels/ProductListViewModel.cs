@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -20,6 +19,13 @@ namespace eCommerce.ViewModels
             set => SetProperty(ref _store, value);
         }
 
+        private Cart _cart;
+        public Cart Cart
+        {
+            get => _cart;
+            set => SetProperty(ref _cart, value);
+        }
+
         private string _emptyMessage;
         public string EmptyMessage
         {
@@ -27,44 +33,74 @@ namespace eCommerce.ViewModels
             set => SetProperty(ref _emptyMessage, value);
         }
 
-        public ICommand ProductsCommand { get; }
-        public ICommand AddToCartCommand { get; }
 
+        //Bindable commands
+        public ICommand LoadProductsCommand => new Command(ExecuteProductsCommand);
+        public ICommand AddToCartCommand => new Command<int>(ExecuteAddToCartCommand);
+
+
+        //Services
         readonly IProductService _productService;
         readonly IStoreService _storeService;
+        readonly ICartService _cartService;
 
-        public ProductListViewModel(IStoreService storeService, IProductService productService)
+        public ProductListViewModel(IStoreService storeService, IProductService productService, ICartService cartService)
         {
             _storeService = storeService;
             _productService = productService;
+            _cartService = cartService;
+
             Products = new ObservableCollection<Product>();
             Store = new Store
             {
                 Name = "Carregando...",
                 LogoURL = ""
             };
-            ProductsCommand = new Command(ExecuteProductsCommand);
-            AddToCartCommand = new Command(ExecuteAddToCartCommand);
+            Cart = new Cart();
         }
 
+
+        //Commands allowing for async execution
         private async void ExecuteProductsCommand()
         {
             await GetProductsAsync();
         }
 
-        private async void ExecuteAddToCartCommand()
+        private async void ExecuteAddToCartCommand(int id)
         {
-            //await GetProductsAsync();
+            await AddToCartAsync(id);
         }
 
+
+        //Page initializer
         public async override Task InitializeAsync()
         {
             IsBusy = true;
             if (Products.Any())
                 return;
             await GetStoreAsync();
-            await GetProductsAsync();
+            await GetCartAsync();
             IsBusy = false;
+        }
+
+
+        //Async methods
+        private async Task AddToCartAsync(int id)
+        {
+            await _cartService.Add(Products.First(p => p.Id == id));
+
+            await GetCartAsync().ConfigureAwait(false);
+        }
+
+        private async Task GetCartAsync()
+        {
+            Cart = await _cartService.Get();
+
+            //Get product data for cart entries
+            Cart.Entries.ForEach(async e =>
+            {
+                e.Product = await _productService.GetById(e.ProductId);
+            });
         }
 
         private async Task GetStoreAsync()
