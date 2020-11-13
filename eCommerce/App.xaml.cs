@@ -1,8 +1,6 @@
 ﻿using eCommerce.Services;
 using eCommerce.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace eCommerce
 {
@@ -14,17 +12,13 @@ namespace eCommerce
 
             Register();
 
-            var navigation = new Xamarin.Forms.NavigationPage(new ProductListPage());
-            navigation.On<iOS>().SetPrefersLargeTitles(true);
-            navigation.BarBackgroundColor = Color.FromHex("#f0f0f0");
-            navigation.BarTextColor = Color.Black;
-
-            MainPage = navigation;
+            MainPage = new Xamarin.Forms.NavigationPage(new ProductListPage());
         }
 
         void Register()
         {
             DependencyService.RegisterSingleton<IProductService>(new ProductService());
+            DependencyService.RegisterSingleton<IStoreService>(new StoreService());
         }
 
         protected override void OnStart()

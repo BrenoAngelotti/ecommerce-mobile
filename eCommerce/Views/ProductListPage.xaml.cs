@@ -1,4 +1,6 @@
-﻿using eCommerce.Services;
+﻿using System.Threading.Tasks;
+using eCommerce.Helpers;
+using eCommerce.Services;
 using eCommerce.ViewModels;
 using Xamarin.Forms;
 
@@ -10,7 +12,20 @@ namespace eCommerce.Views
         {
             InitializeComponent();
             var productService = DependencyService.Get<IProductService>();
-            BindingContext = new ProductListViewModel(productService);
+            var storeService = DependencyService.Get<IStoreService>();
+            BindingContext = new ProductListViewModel(storeService, productService);
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await OnAppearingAsync();
+        }
+
+        async Task OnAppearingAsync()
+        {
+            if (BindingContext is IInitialize viewModel)
+                await viewModel.InitializeAsync().ConfigureAwait(false);
         }
     }
 }

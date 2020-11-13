@@ -16,6 +16,9 @@ namespace eCommerce.Services
 
         public async Task<IEnumerable<Product>> Get()
         {
+            //Mock
+            await Task.Delay(2000);
+
             Products.Add(new Product()
             {
                 Id = 0,
@@ -55,6 +58,8 @@ namespace eCommerce.Services
                 PictureURL = "https://images-na.ssl-images-amazon.com/images/I/51X2UICkojL._AC_SX522_.jpg",
                 UnitPrice = 24.8m
             });
+
+            //End mock
 
             return await Task.FromResult(Products);
         }
