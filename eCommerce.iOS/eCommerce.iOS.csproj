@@ -113,6 +113,14 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\no_pic.imageset\camera-off-2.png" />
+    <ImageAsset Include="Assets.xcassets\no_pic.imageset\camera-off-3.png" />
+    <ImageAsset Include="Assets.xcassets\no_pic.imageset\camera-off-4.png" />
+    <ImageAsset Include="Assets.xcassets\no_pic.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\cart.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\cart.imageset\cart-outline.png" />
+    <ImageAsset Include="Assets.xcassets\cart.imageset\cart-outline-2.png" />
+    <ImageAsset Include="Assets.xcassets\cart.imageset\cart-outline-3.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -141,5 +149,9 @@
       <Project>{42B3E190-2BEC-46E3-8267-3B94AB0D6B22}</Project>
       <Name>eCommerce</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\no_pic.imageset\" />
+    <Folder Include="Assets.xcassets\cart.imageset\" />
   </ItemGroup>
 </Project>

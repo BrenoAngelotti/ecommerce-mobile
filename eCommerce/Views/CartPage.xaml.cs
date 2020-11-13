@@ -13,11 +13,13 @@ namespace eCommerce.Views
         public CartPage()
         {
             InitializeComponent();
-            InitializeComponent();
-            var productService = DependencyService.Get<IProductService>();
-            var storeService = DependencyService.Get<IStoreService>();
+            
             var cartService = DependencyService.Get<ICartService>();
-            BindingContext = new CartViewModel(storeService, productService, cartService);
+            var productService = DependencyService.Get<IProductService>();
+
+            BindingContext = new CartViewModel(cartService, productService);
+
+            Title = "Carrinho";
         }
 
         protected override async void OnAppearing()

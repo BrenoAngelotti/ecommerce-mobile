@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using eCommerce.Models;
 using eCommerce.Services;
+using eCommerce.Views;
 using Xamarin.Forms;
 
 namespace eCommerce.ViewModels
@@ -11,6 +12,13 @@ namespace eCommerce.ViewModels
     public class ProductListViewModel : BaseViewModel
     {
         public ObservableCollection<Product> Products { get; set; }
+
+        private int _cartCount;
+        public int CartCount
+        {
+            get => _cartCount;
+            set => SetProperty(ref _cartCount, value);
+        }
 
         private Store _store;
         public Store Store
@@ -37,6 +45,7 @@ namespace eCommerce.ViewModels
         //Bindable commands
         public ICommand LoadProductsCommand => new Command(ExecuteProductsCommand);
         public ICommand AddToCartCommand => new Command<int>(ExecuteAddToCartCommand);
+        public ICommand OpenCartCommand => new Command(ExecuteOpenCart);
 
 
         //Services
@@ -57,6 +66,7 @@ namespace eCommerce.ViewModels
                 LogoURL = ""
             };
             Cart = new Cart();
+            CartCount = 0;
         }
 
 
@@ -66,9 +76,14 @@ namespace eCommerce.ViewModels
             await GetProductsAsync();
         }
 
-        private async void ExecuteAddToCartCommand(int id)
+        private void ExecuteAddToCartCommand(int id)
         {
-            await AddToCartAsync(id);
+            AddToCartAsync(id);
+        }
+
+        private async void ExecuteOpenCart()
+        {
+            await OpenCartAsync();
         }
 
 
@@ -85,22 +100,24 @@ namespace eCommerce.ViewModels
 
 
         //Async methods
-        private async Task AddToCartAsync(int id)
+        private void AddToCartAsync(int id)
         {
-            await _cartService.Add(Products.First(p => p.Id == id));
+            _cartService.Add(Products.First(p => p.Id == id));
 
-            await GetCartAsync().ConfigureAwait(false);
+            GetCartAsync();
         }
 
         private async Task GetCartAsync()
         {
-            Cart = await _cartService.Get();
+            Cart = await _cartService.Get().ConfigureAwait(false);
 
             //Get product data for cart entries
             Cart.Entries.ForEach(async e =>
             {
-                e.Product = await _productService.GetById(e.ProductId);
+                e.Product = await _productService.GetById(e.ProductId).ConfigureAwait(false);
             });
+
+            CartCount = Cart.Count;
         }
 
         private async Task GetStoreAsync()
@@ -121,6 +138,11 @@ namespace eCommerce.ViewModels
 
             IsBusy = false;
             EmptyMessage = "Nenhum produto encontrado";
+        }
+
+        private async Task OpenCartAsync()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new CartPage());
         }
     }
 }

@@ -18,5 +18,10 @@
                 return result;
             }
         }
+
+        public CartEntry()
+        {
+            Product = new Product();
+        }
     }
 }

@@ -1,5 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="eCommerce.Views.CartPage">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    x:Class="eCommerce.Views.CartPage">
     <ContentPage.Content>
+        <CollectionView
+            ItemsSource="{Binding Entries}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <ffimageloading:CachedImage
+                                Aspect="AspectFit"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="no_pic"
+                                LoadingPlaceholder="no_pic"
+                                Source="{Binding PictureURL}" />
+
+                        <Label
+                            Text="{Binding Product.Name}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </ContentPage.Content>
 </ContentPage>

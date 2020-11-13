@@ -30,9 +30,12 @@
                 VerticalOptions="Center"
                 HorizontalOptions="CenterAndExpand"/>
             <Button
-                Text="{Binding Cart.Count, StringFormat='Carrinho({0})'}"
+                Text="{Binding CartCount, StringFormat='Carrinho({0})'}"
                 VerticalOptions="Center"
                 HorizontalOptions="End"
+                Command="{Binding OpenCartCommand}"
+                BackgroundColor="Transparent"
+                TextColor="White"
                 />
         </StackLayout>
     </NavigationPage.TitleView>
@@ -70,24 +73,29 @@
                                 Aspect="AspectFit"
                                 WidthRequest="200"
                                 DownsampleToViewSize="true"
-                                ErrorPlaceholder="bm_pattern"
-                                LoadingPlaceholder="bm_pattern"
+                                ErrorPlaceholder="no_pic"
+                                LoadingPlaceholder="no_pic"
                                 Source="{Binding PictureURL}" />
 
                             <Label
+                                TextColor="Black"
                                 FontAttributes="Bold"
+                                FontSize="Large"
                                 Text="{Binding Title}"/>
 
                             <Label
+                                TextColor="Black"
                                 Text="{
                                     Binding UnitPrice,
-                                    StringFormat='R$ {0:F2}'}"/>
+                                    StringFormat='R$ {0:F2}'}"
+                                FontSize="Large"/>
 
                             <Button
                                 Text="Adicionar ao Carrinho"
                                 BackgroundColor="#306040"
                                 TextColor="White"
-                                HeightRequest="32"
+                                HeightRequest="36"
+                                TextTransform="Uppercase"
                                 CommandParameter="{Binding Id}"
                                 Command="{Binding Path=AddToCartCommand, Source={RelativeSource AncestorType={x:Type vm:ProductListViewModel}}}"/>
                         </StackLayout>

@@ -23,5 +23,10 @@ namespace eCommerce.Models
                     return 0;
             }
         }
+
+        public Cart()
+        {
+            Entries = new List<CartEntry>();
+        }
     }
 }

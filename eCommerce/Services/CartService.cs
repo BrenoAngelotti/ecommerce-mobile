@@ -11,7 +11,7 @@ namespace eCommerce.Services
     {
         Task<Cart> Get();
 
-        Task Add(Product product);
+        void Add(Product product);
 
         Task Remove(Product product);
 
@@ -27,7 +27,7 @@ namespace eCommerce.Services
             Entries = new List<CartEntry>()
         };
 
-        public Task Add(Product product)
+        public void Add(Product product)
         {
             if (Cart.Entries.Any(e => e.ProductId == product.Id))
             {
@@ -42,8 +42,6 @@ namespace eCommerce.Services
                     Id = Cart.Entries.Max(e => e.Id) + 1
                 });
             }
-
-            return Task.CompletedTask;
         }
 
         public async Task<Cart> Get()
@@ -57,7 +55,6 @@ namespace eCommerce.Services
                 ProductId = 1,
                 Amount = 2
             }) ;
-
             //End mock
 
             return await Task.FromResult(Cart);

@@ -11,9 +11,11 @@ namespace eCommerce.Views
         public ProductListPage()
         {
             InitializeComponent();
-            var productService = DependencyService.Get<IProductService>();
+
             var storeService = DependencyService.Get<IStoreService>();
+            var productService = DependencyService.Get<IProductService>();
             var cartService = DependencyService.Get<ICartService>();
+
             BindingContext = new ProductListViewModel(storeService, productService, cartService);
         }
 
