@@ -113,6 +113,18 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\no_pic.imageset\camera-off-2.png" />
+    <ImageAsset Include="Assets.xcassets\no_pic.imageset\camera-off-3.png" />
+    <ImageAsset Include="Assets.xcassets\no_pic.imageset\camera-off-4.png" />
+    <ImageAsset Include="Assets.xcassets\no_pic.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\cart.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\cart.imageset\cart-outline.png" />
+    <ImageAsset Include="Assets.xcassets\cart.imageset\cart-outline-2.png" />
+    <ImageAsset Include="Assets.xcassets\cart.imageset\cart-outline-3.png" />
+    <ImageAsset Include="Assets.xcassets\cart_remove.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\cart_remove.imageset\cart-remove.png" />
+    <ImageAsset Include="Assets.xcassets\cart_remove.imageset\cart-remove-3.png" />
+    <ImageAsset Include="Assets.xcassets\cart_remove.imageset\cart-remove-2.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -125,6 +137,15 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.FFImageLoading">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Forms">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -132,5 +153,10 @@
       <Project>{42B3E190-2BEC-46E3-8267-3B94AB0D6B22}</Project>
       <Name>eCommerce</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\no_pic.imageset\" />
+    <Folder Include="Assets.xcassets\cart.imageset\" />
+    <Folder Include="Assets.xcassets\cart_remove.imageset\" />
   </ItemGroup>
 </Project>

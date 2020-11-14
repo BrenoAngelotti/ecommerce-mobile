@@ -1,8 +1,106 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="eCommerce.Views.ProductListPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Product list goes here"/>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="eCommerce.Views.ProductListPage"
+    xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:vm="clr-namespace:eCommerce.ViewModels"
+    iOS:NavigationPage.PrefersLargeTitles="False"
+    iOS:Page.UseSafeArea="True"
+    Background="#f0f0f0">
+    <NavigationPage.TitleView>
+        <StackLayout
+            Orientation="Horizontal"
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="FillAndExpand">
+            <ffimageloading:CachedImage
+                Aspect="AspectFit"
+                HeightRequest="50"
+                WidthRequest="50"
+                Margin="8"
+                DownsampleToViewSize="true"
+                Source="{Binding Store.LogoURL}"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+            <Label
+                Text="{Binding Store.Name}"
+                FontAttributes="Bold"
+                FontSize="Title"
+                VerticalOptions="Center"
+                HorizontalOptions="CenterAndExpand"/>
+            <Button
+                Text="{Binding CartCount, StringFormat='Carrinho({0})'}"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                Command="{Binding OpenCartCommand}"
+                BackgroundColor="Transparent"
+                />
         </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <RefreshView
+            Command="{Binding LoadProductsCommand}"
+            IsRefreshing="{Binding IsBusy}">
+            <CollectionView
+                ItemsSource="{Binding Products}">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Vertical"
+                        ItemSpacing="16"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.EmptyView>
+                    <StackLayout
+                        VerticalOptions="FillAndExpand">
+                        <Label
+                            FontSize="Large"
+                            TextColor="Black"
+                            HorizontalTextAlignment="Center"
+                            VerticalOptions="CenterAndExpand"
+                            Text="{Binding EmptyMessage}"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout
+                            Padding="16"
+                            BackgroundColor="White">
+                            <ffimageloading:CachedImage
+                                Aspect="AspectFit"
+                                WidthRequest="200"
+                                DownsampleToViewSize="true"
+                                ErrorPlaceholder="no_pic"
+                                LoadingPlaceholder="no_pic"
+                                Source="{Binding PictureURL}" />
+
+                            <Label
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                FontSize="Large"
+                                Text="{Binding Name}"/>
+
+                            <Label
+                                TextColor="Black"
+                                Text="{
+                                    Binding UnitPrice,
+                                    StringFormat='R$ {0:F2}'}"
+                                FontSize="Large"/>
+
+                            <Button
+                                Text="Adicionar ao Carrinho"
+                                BackgroundColor="#306040"
+                                TextColor="White"
+                                HeightRequest="36"
+                                TextTransform="Uppercase"
+                                CommandParameter="{Binding Id}"
+                                Command="{Binding Path=AddToCartCommand, Source={RelativeSource AncestorType={x:Type vm:ProductListViewModel}}}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>    
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

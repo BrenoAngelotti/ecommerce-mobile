@@ -4,7 +4,7 @@ namespace eCommerce.Models
 {
     public class Product : BaseEntity
     {
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         [JsonProperty("picture")]
         public string PictureURL { get; set; }

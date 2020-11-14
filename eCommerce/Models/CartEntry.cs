@@ -4,12 +4,24 @@
     {
         public Product Product { get; set; }
 
+        public int ProductId { get; set; }
+
         public int Amount { get; set; }
 
         public decimal Subtotal { get
             {
-                return Product.UnitPrice * Amount;
+                var result = 0m;
+                if(Product != null)
+                {
+                    result = Product.UnitPrice * Amount;
+                }
+                return result;
             }
+        }
+
+        public CartEntry()
+        {
+            Product = new Product();
         }
     }
 }
