@@ -121,6 +121,10 @@
     <ImageAsset Include="Assets.xcassets\cart.imageset\cart-outline.png" />
     <ImageAsset Include="Assets.xcassets\cart.imageset\cart-outline-2.png" />
     <ImageAsset Include="Assets.xcassets\cart.imageset\cart-outline-3.png" />
+    <ImageAsset Include="Assets.xcassets\cart_remove.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\cart_remove.imageset\cart-remove.png" />
+    <ImageAsset Include="Assets.xcassets\cart_remove.imageset\cart-remove-3.png" />
+    <ImageAsset Include="Assets.xcassets\cart_remove.imageset\cart-remove-2.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -153,5 +157,6 @@
   <ItemGroup>
     <Folder Include="Assets.xcassets\no_pic.imageset\" />
     <Folder Include="Assets.xcassets\cart.imageset\" />
+    <Folder Include="Assets.xcassets\cart_remove.imageset\" />
   </ItemGroup>
 </Project>

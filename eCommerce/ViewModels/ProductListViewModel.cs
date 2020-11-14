@@ -76,9 +76,9 @@ namespace eCommerce.ViewModels
             await GetProductsAsync();
         }
 
-        private void ExecuteAddToCartCommand(int id)
+        private async void ExecuteAddToCartCommand(int id)
         {
-            AddToCartAsync(id);
+            await AddToCartAsync(id);
         }
 
         private async void ExecuteOpenCart()
@@ -100,11 +100,11 @@ namespace eCommerce.ViewModels
 
 
         //Async methods
-        private void AddToCartAsync(int id)
+        private async Task AddToCartAsync(int id)
         {
             _cartService.Add(Products.First(p => p.Id == id));
 
-            GetCartAsync();
+            await GetCartAsync();
         }
 
         private async Task GetCartAsync()

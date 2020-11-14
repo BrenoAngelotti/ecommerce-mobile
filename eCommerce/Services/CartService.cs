@@ -13,11 +13,9 @@ namespace eCommerce.Services
 
         void Add(Product product);
 
-        Task Remove(Product product);
+        void Remove(Product product);
 
-        Task Remove(CartEntry cartEntry);
-
-        Task Update(CartEntry cartEntry);
+        void Remove(CartEntry cartEntry);
     }
 
     public class CartService : ICartService
@@ -39,43 +37,43 @@ namespace eCommerce.Services
                     Product = product,
                     Amount = 1,
                     ProductId = product.Id,
-                    Id = Cart.Entries.Max(e => e.Id) + 1
+                    Id = Cart.Entries.Count == 0 ? 0 : Cart.Entries.Max(e => e.Id) + 1
                 });
             }
         }
 
         public async Task<Cart> Get()
         {
-            //Mock
-            await Task.Delay(500);
-
-            if (!Cart.Entries.Any())
-            {
-                Cart.Entries.Add(new CartEntry
-                {
-                    Id = 0,
-                    ProductId = 1,
-                    Amount = 2
-                });
-            }
-            //End mock
-
             return await Task.FromResult(Cart);
         }
 
-        public Task Remove(CartEntry cartEntry)
+        public void Remove(CartEntry cartEntry)
         {
-            throw new NotImplementedException();
+            CartEntry foundEntry = Cart.Entries.First(e => e.Id == cartEntry.Id);
+            if (foundEntry == null)
+            {
+                return;
+            }
+
+            Cart.Entries.Remove(foundEntry);
         }
 
-        public Task Remove(Product product)
+        public void Remove(Product product)
         {
-            throw new NotImplementedException();
-        }
+            var foundEntry = Cart.Entries.First(e => e.ProductId == product.Id);
+            if (foundEntry == null)
+            {
+                return;
+            }
 
-        public Task Update(CartEntry cartEntry)
-        {
-            throw new NotImplementedException();
+            if (foundEntry.Amount == 1)
+            {
+                Cart.Entries.Remove(foundEntry);
+            }
+            else
+            {
+                Cart.Entries.First(e => e.ProductId == product.Id).Amount--;
+            }
         }
     }
 }
