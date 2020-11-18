@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using eCommerce.Helpers;
 using eCommerce.Models;
 
 namespace eCommerce.Services
@@ -15,15 +16,14 @@ namespace eCommerce.Services
 
         public async Task<Store> Get()
         {
-            //Mock
-            await Task.Delay(500);
-
-            Store = new Store
+            try
             {
-                Name = "Amazon",
-                LogoURL = "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png"
-            };
-            //End mock
+                Store = await Network.GetFromAPI<Store>("store/");
+            }
+            catch
+            {
+                Store = new Store { Id = 0, LogoURL = "", Name = "Loja não encontrada" };
+            }
 
             return await Task.FromResult(Store);
         }

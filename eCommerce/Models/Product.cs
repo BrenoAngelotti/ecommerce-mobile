@@ -6,7 +6,7 @@ namespace eCommerce.Models
     {
         public string Name { get; set; }
 
-        [JsonProperty("picture")]
+        [JsonProperty("picture_url")]
         public string PictureURL { get; set; }
 
         [JsonProperty("unit_price")]

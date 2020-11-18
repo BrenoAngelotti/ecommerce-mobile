@@ -5,6 +5,7 @@ using System.Windows.Input;
 using eCommerce.Models;
 using eCommerce.Services;
 using eCommerce.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace eCommerce.ViewModels
@@ -73,7 +74,7 @@ namespace eCommerce.ViewModels
         //Commands allowing for async execution
         private async void ExecuteProductsCommand()
         {
-            await GetProductsAsync();
+            await GetDataAsync();
         }
 
         private async void ExecuteAddToCartCommand(int id)
@@ -90,10 +91,19 @@ namespace eCommerce.ViewModels
         //Page initializer
         public async override Task InitializeAsync()
         {
-            IsBusy = true;
-            if (Products.Any())
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                EmptyMessage = "Sem conexão à internet";
+                IsBusy = false;
                 return;
-            await GetStoreAsync();
+            }
+            await GetCartAsync();
+            if (Products.Any())
+            {
+                return;
+            }
+
+            IsBusy = true;
             await GetCartAsync();
             IsBusy = false;
         }
@@ -120,14 +130,18 @@ namespace eCommerce.ViewModels
             CartCount = Cart.Count;
         }
 
-        private async Task GetStoreAsync()
+        private async Task GetDataAsync()
         {
-            Store = await _storeService.Get().ConfigureAwait(false);
-        }
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                EmptyMessage = "Sem conexão à internet";
+                IsBusy = false;
+                return;
+            }
 
-        private async Task GetProductsAsync()
-        {
             EmptyMessage = "Carregando...";
+
+            Store = await _storeService.Get().ConfigureAwait(false);
             var products = await _productService.Get().ConfigureAwait(false);
             
             Products.Clear();

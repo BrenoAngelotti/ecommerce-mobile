@@ -18,11 +18,13 @@
 
             <CollectionView.EmptyView>
                 <StackLayout
-                    VerticalOptions="FillAndExpand">
+                    VerticalOptions="FillAndExpand"
+                    Spacing="8">
                     <Label
                         TextColor="Black"
                         Grid.Row="1"
                         FontSize="Large"
+                        HorizontalOptions="CenterAndExpand"
                         HorizontalTextAlignment="Center"
                         VerticalOptions="CenterAndExpand"
                         Text="{Binding EmptyMessage}"/>
@@ -33,7 +35,9 @@
                 <StackLayout
                     Padding="16, 4"
                     Orientation="Horizontal"
-                    HorizontalOptions="FillAndExpand">
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    IsVisible="{Binding ShowList}">
                     <Label
                         VerticalOptions="FillAndExpand"
                         HorizontalOptions="FillAndExpand"
@@ -45,6 +49,25 @@
                         />
                 </StackLayout>
             </CollectionView.Header>
+
+            <CollectionView.Footer>
+                <StackLayout
+                    Padding="16, 4"
+                    Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    IsVisible="{Binding ShowList}">
+                    <Label
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        Text="{Binding CartTotal, StringFormat='Total R${0:F2}'}"
+                        HorizontalTextAlignment="End"
+                        />
+                </StackLayout>
+            </CollectionView.Footer>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -102,8 +125,11 @@
                                         Text="-"
                                         BackgroundColor="Red"
                                         TextColor="White"
-                                        Padding="16, 4"
-                                        VerticalOptions="CenterAndExpand"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        FontAttributes="Bold"
+                                        CornerRadius="5"
+                                        VerticalOptions="Center"
                                         CommandParameter="{Binding ProductId}"
                                         Command="{Binding Path=RemoveProductCommand, Source={RelativeSource AncestorType={x:Type vm:CartViewModel}}}"
                                         />
@@ -115,12 +141,16 @@
                                         <Label
                                             Text="Qtd"
                                             VerticalOptions="End"
+                                            HorizontalOptions="Center"
+                                            HorizontalTextAlignment="Center"
                                             FontSize="Small"
                                             TextColor="Gray"/>
                                         <Label
                                             WidthRequest="50"
                                             TextColor="Black"
                                             VerticalOptions="StartAndExpand"
+                                            HorizontalOptions="Center"
+                                            HorizontalTextAlignment="Center"
                                             FontSize="Large"
                                             Text="{Binding Amount}"/>
                                     </StackLayout>
@@ -129,14 +159,17 @@
                                         Text="+"
                                         BackgroundColor="#306040"
                                         TextColor="White"
-                                        Padding="16, 4"
-                                        VerticalOptions="CenterAndExpand"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        FontAttributes="Bold"
+                                        CornerRadius="5"
+                                        VerticalOptions="Center"
                                         CommandParameter="{Binding ProductId}"
                                         Command="{Binding Path=AddProductCommand, Source={RelativeSource AncestorType={x:Type vm:CartViewModel}}}"
                                         />
 
                                     <StackLayout
-                                        HorizontalOptions="FillAndExpand"
+                                        HorizontalOptions="EndAndExpand"
                                         VerticalOptions="CenterAndExpand"
                                         Spacing="0">
                                         <Label
@@ -148,6 +181,7 @@
                                         <Label
                                             HorizontalTextAlignment="End"
                                             VerticalOptions="Start"
+                                            TextColor="Black"
                                             FontSize="Large"
                                             Text="{Binding Subtotal, StringFormat='R$ {0:F2}'}"
                                             />

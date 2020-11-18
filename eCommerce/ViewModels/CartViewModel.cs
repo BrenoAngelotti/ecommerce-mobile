@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -21,11 +20,25 @@ namespace eCommerce.ViewModels
             set => SetProperty(ref _cart, value);
         }
 
+        private bool _showList;
+        public bool ShowList
+        {
+            get => _showList;
+            set => SetProperty(ref _showList, value);
+        }
+
         private int _cartCount;
         public int CartCount
         {
             get => _cartCount;
             set => SetProperty(ref _cartCount, value);
+        }
+
+        private decimal _cartTotal;
+        public decimal CartTotal
+        {
+            get => _cartTotal;
+            set => SetProperty(ref _cartTotal, value);
         }
 
         private string _emptyMessage;
@@ -107,6 +120,8 @@ namespace eCommerce.ViewModels
             });
 
             CartCount = Cart.Count;
+            CartTotal = Cart.Total;
+            ShowList = CartTotal != 0;
         }
     }
 }

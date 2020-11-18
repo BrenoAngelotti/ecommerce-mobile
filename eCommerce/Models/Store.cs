@@ -1,5 +1,4 @@
-﻿using System;
-using eCommerce.Helpers;
+﻿using Newtonsoft.Json;
 
 namespace eCommerce.Models
 {
@@ -7,6 +6,7 @@ namespace eCommerce.Models
     {
         public string Name { get; set; }
 
+        [JsonProperty("logo_url")]
         public string LogoURL { get; set; }
     }
 }
