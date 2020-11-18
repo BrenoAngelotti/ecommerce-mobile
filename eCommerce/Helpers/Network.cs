@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using eCommerce.Models;
 using Newtonsoft.Json;
 
 namespace eCommerce.Helpers
